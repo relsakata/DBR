@@ -1,12 +1,16 @@
 repeat task.wait() until game:IsLoaded()
-local HaveAllDB = require(game:GetService("ReplicatedStorage")["_replicationFolder"].DragonBallUtils).PlayerHasAllDragonBalls(game.Players.LocalPlayer)
-
+local LocalPlayer = game.Players.LocalPlayer
+local Character = LocalPlayer.Character
 
 --Wish
-if HaveAllDB then
-    firesignal(game.Players.LocalPlayer.PlayerGui.Wish.Wishes.List.ZenkaiBoost.Button.MouseButton1Click)
-    task.wait(.5)
-    firesignal(game.Players.LocalPlayer.PlayerGui.Wish.Accept.MouseButton1Click)
+if require(game:GetService("ReplicatedStorage")["_replicationFolder"].DragonBallUtils).PlayerHasAllDragonBalls(LocalPlayer) then
+    Character.HumanoidRootPart.CFrame = CFrame.new(game:GetService("Workspace").Map.Pedestal.Center.Position)
+    task.wait(.2)
+    fireproximityprompt(game:GetService("Workspace").Map.Pedestal.Center.Attachment.ProximityPrompt)
+    task.wait(.2)
+    firesignal(LocalPlayer.PlayerGui.Wish.Wishes.List.ZenkaiBoost.Button.MouseButton1Click)
+    task.wait(.2)
+    firesignal(LocalPlayer.PlayerGui.Wish.Accept.MouseButton1Click)
 end
 
 
@@ -14,8 +18,8 @@ end
 
 for i,v in workspace.Map:GetChildren() do
     if v:FindFirstChild("Decor") and v:FindFirstChild("Main") then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Main.Position)
-        task.wait(.5)
+        Character.HumanoidRootPart.CFrame = CFrame.new(v.Main.Position)
+        task.wait(.2)
         fireproximityprompt(v.Main.Attachment.ProximityPrompt)
         task.wait(.2)
     end
