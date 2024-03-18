@@ -17,11 +17,12 @@ end
 -- DB Teleport
 
 for i,v in workspace.Map:GetChildren() do
-    if v:FindFirstChild("Decor") and v:FindFirstChild("Main") then
+    if v:FindFirstChild("Main") then
         Character.HumanoidRootPart.CFrame = CFrame.new(v.Main.Position)
-        task.wait(.2)
+        task.wait(.5)
         fireproximityprompt(v.Main.Attachment.ProximityPrompt)
         task.wait(.2)
     end
 end
+task.wait(.5)
 loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")():Teleport(game.PlaceId)
