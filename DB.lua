@@ -1,5 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-local HaveAllDB = require(game:GetService("ReplicatedStorage")["_replicationFolder"].DragonBallUtils).PlayerHaveAllDragonBalls(game.Players.LocalPlayer)
+local HaveAllDB = require(game:GetService("ReplicatedStorage")["_replicationFolder"].DragonBallUtils).PlayerHasAllDragonBalls(game.Players.LocalPlayer)
 
 
 --Wish
