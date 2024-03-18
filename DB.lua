@@ -1,4 +1,4 @@
-repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:IsLoaded() task.wait(1.5)
 local LocalPlayer = game.Players.LocalPlayer
 local Character = LocalPlayer.Character
 
