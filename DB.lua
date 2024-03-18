@@ -1,4 +1,4 @@
-repeat task.wait() until game:IsLoaded() task.wait(1.5)
+repeat task.wait() until game:IsLoaded() task.wait(2)
 local LocalPlayer = game.Players.LocalPlayer
 local Character = LocalPlayer.Character
 
@@ -24,5 +24,5 @@ for i,v in workspace.Map:GetChildren() do
         task.wait(.2)
     end
 end
-task.wait(.5)
+task.wait(1)
 loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")():Teleport(game.PlaceId)
