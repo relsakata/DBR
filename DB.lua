@@ -36,29 +36,29 @@ end
 local JobIds = game:GetService("HttpService"):JSONDecode(readfile("dbr-shop.json"))
 
 local function ServerHop()
-	local Site;
+	local Body;
 	if not nextPageCursor then
-		Site = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. game.placeId .. '/servers/Public?sortOrder=Asc&limit=100'))
+		Body = game:GetService("HttpService"):JSONDecode(http_request({ Url = 'https://games.roblox.com/v1/games/' .. game.placeId .. '/servers/Public?sortOrder=Asc&limit=100', Method = "GET"}).Body)
 	else
-		Site = game:GetService("HttpService"):JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. game.placeId .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. nextPageCursor))
+		Body = game:GetService("HttpService"):JSONDecode(http_request({ Url = 'https://games.roblox.com/v1/games/' .. game.placeId .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. nextPageCursor, Method = "GET"}).Body)
 	end
 	local ID = ""
-	if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-		nextPageCursor = Site.nextPageCursor
+	if Body.nextPageCursor and Body.nextPageCursor ~= "null" and Body.nextPageCursor ~= nil then
+		nextPageCursor = Body.nextPageCursor
 	end
 	local num = 0;
-	for i,v in pairs(Site.data) do
+	for i,v in pairs(Body.data) do
 		ID = v.id
 		if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            if JobIds[ID] then
-                if tick() - JobIds[ID] >= 600 then
-                    JobIds[ID] = nil
-                elseif i ~= #Site.data then
-                    continue
-                else
-                    xpcall(ServerHop, warn)
-                end
-            end
+			if JobIds[ID] then
+				if tick() - JobIds[ID] >= 600 then
+					JobIds[ID] = nil
+				elseif i ~= #Body.data then
+					continue
+				else
+					xpcall(ServerHop, warn)
+				end
+			end
 			JobIds[ID] = tick()
 			writefile("dbr-shop.json", game:GetService("HttpService"):JSONEncode(JobIds))
 			repeat game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId, ID) task.wait() until nil
